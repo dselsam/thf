@@ -121,7 +121,7 @@ thf_binary_formula : thf_binary_pair { $1 }
 | thf_binary_type { $1 }
 
 thf_binary_pair :: { THF.Formula }
-thf_binary_pair : thf_unitary_formula thf_pair_connective thf_unitary_formula { THF.TODO }
+thf_binary_pair : thf_unitary_formula thf_pair_connective thf_unitary_formula { THF.BinaryFormula $1 $2 $3 }
 
 thf_binary_tuple :: { THF.Formula }
 thf_binary_tuple : thf_or_formula { $1 }
@@ -207,7 +207,7 @@ thf_union_type : thf_unitary_type plus thf_unitary_type { THF.Union $1 $3 }
 
 thf_conn_term :: { THF.Formula }
 thf_conn_term : thf_pair_connective { $1 }
-| assoc_connective { THF.TODO }
+| assoc_connective { $1 }
 | thf_unary_connective { $1 }
 
 thf_quantifier :: { THF.Quantifier }
@@ -226,8 +226,8 @@ thf_pair_connective : infix_equality { $1 }
 
 thf_unary_connective :: { THF.Formula }
 thf_unary_connective : unary_connective { $1 }
-| dbl_exclam { THF.TODO }
-| dbl_question { THF.TODO }
+| dbl_exclam { THF.Operator THF.PI }
+| dbl_question { THF.Operator THF.EX }
 
 subtype_sign : subtype {}
 
@@ -241,8 +241,8 @@ binary_connective  : iff { THF.Operator THF.IFF }
                     | nor  { THF.Operator THF.NOR }
                     | nand { THF.Operator THF.NAND }
 
-assoc_connective  : vline {}
-                  | ampersand {}
+assoc_connective  : vline { THF.Operator THF.OR }
+                  | ampersand { THF.Operator THF.AND }
 
 unary_connective  :: { THF.Formula }
 unary_connective  : tilde { THF.Operator THF.NOT }
@@ -279,19 +279,19 @@ functor  :: {String}
 functor  : atomic_word {$1}
 
 defined_term  :: {THF.Formula}
-defined_term  : defined_atom { THF.TODO}
-               | defined_atomic_term { THF.TODO }
+defined_term  : defined_atom { $1 }
+              | defined_atomic_term { $1 }
 
 defined_atom  :: {THF.Formula}
-defined_atom  : number {THF.TODO}
-| distinct_object {THF.TODO}
+defined_atom  : number { THF.Number $1 }
+| distinct_object { THF.Object $1 }
 
 defined_atomic_term :: {THF.Formula}
-defined_atomic_term  : defined_plain_term {THF.TODO}
+defined_atomic_term  : defined_plain_term { $1 }
 
 defined_plain_term  :: {THF.Formula}
-defined_plain_term  : defined_constant { THF.TODO }
-| defined_functor  lp arguments  rp { THF.TODO }
+defined_plain_term  : defined_constant { THF.Constant $1 }
+| defined_functor  lp arguments  rp { THF.Functor $1 $3  }
 
 defined_constant  :: {String}
 defined_constant  : defined_functor {$1}
@@ -302,8 +302,8 @@ defined_functor  : atomic_defined_word {$1}
 -- defined_functor  :==
 
 system_term  :: {THF.Formula}
-system_term  :  system_constant  {THF.TODO}
-| system_functor  lp arguments  rp {THF.TODO}
+system_term  :  system_constant  {THF.Constant $1}
+| system_functor  lp arguments  rp {THF.Functor $1 $3}
 
 system_constant  :: {String}
 system_constant  : system_functor  {$1}

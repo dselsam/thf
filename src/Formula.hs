@@ -4,6 +4,7 @@ data Formula = OrFormula Formula Formula
              | AndFormula Formula Formula
              | ApplyFormula Formula Formula
              | QuantifiedFormula Quantifier [Var] Formula
+             | BinaryFormula Formula Formula Formula
              | UnaryFormula Formula Formula
              | Conditional Formula Formula Formula
              | TypeFormula Formula Formula
@@ -14,11 +15,12 @@ data Formula = OrFormula Formula Formula
              | Operator OperatorType
              | Constant String
              | Variable Var
+             | Number Rational
+             | Object String
              | Functor String [Formula]
-             | TODO
              deriving (Show)
 
-data OperatorType = IFF | Implies | ImpliedBy | XOR | NOR | NAND | NOT | EQ | NEQ
+data OperatorType = IFF | Implies | ImpliedBy | XOR | NOR | NAND | NOT | EQ | NEQ | PI | EX | OR | AND
                   deriving (Show)
 
 data Quantifier = Q_Exclam
