@@ -198,8 +198,8 @@ thf_mapping_type : thf_unitary_type rangle thf_unitary_type { THF.Mapping $1 $3 
 | thf_unitary_type rangle thf_mapping_type { THF.Mapping $1 $3 }
 
 thf_xprod_type :: { THF.Formula }
-thf_xprod_type : thf_unitary_type star thf_unitary_type { THF.XProp $1 $3 }
-| thf_xprod_type star thf_unitary_type { THF.XProp $1 $3 }
+thf_xprod_type : thf_unitary_type star thf_unitary_type { THF.XProd $1 $3 }
+| thf_xprod_type star thf_unitary_type { THF.XProd $1 $3 }
 
 thf_union_type :: { THF.Formula }
 thf_union_type : thf_unitary_type plus thf_unitary_type { THF.Union $1 $3 }
@@ -214,8 +214,8 @@ thf_quantifier :: { THF.Quantifier }
 thf_quantifier : exclam { THF.Q_Exclam }
 | question { THF.Q_Question }
 | carrot { THF.Q_Carrot }
-| mystery1 { THF.Q_Mystery1 }
-| mystery2 { THF.Q_Mystery2 }
+| mystery1 { THF.Q_Pi }
+| mystery2 { THF.Q_Sigma }
 | mystery3 { THF.Q_Mystery3 }
 | mystery4 { THF.Q_Mystery4 }
 
@@ -254,10 +254,10 @@ unary_connective  : tilde { THF.Operator THF.NOT }
 
 
 infix_equality  :: { THF.Formula }
-infix_equality  : equals { THF.Operator THF.EQ }
+infix_equality  : equals { THF.Operator THF.EQQ }
 
 infix_inequality  :: { THF.Formula }
-infix_inequality  : nequals { THF.Operator THF.NEQ }
+infix_inequality  : nequals { THF.Operator THF.NEQQ }
 
 thf_term  :: {THF.Formula}
 thf_term  : function_term  {$1}

@@ -1,8 +1,10 @@
 module Main where
 
 import System.Environment
+import System.Directory
 import qualified Parser as Parser
 import qualified Lexer as Lexer
+import Export
 
 print_usage = putStrLn "usage: parseTHF <filename>"
 
@@ -14,6 +16,6 @@ main = do
     _ -> do
       content <- readFile (args !! 0)
       let tokens = map snd (Lexer.alexScanTokens content) in do
-        print tokens
-        print "--------"
-        print . Parser.parseTHF $ tokens
+        mapM_ putStrLn (export_statements . Parser.parseTHF $ tokens)
+--        return . export_statements . Parser.parseTHF $ tokens
+--        putStr "."

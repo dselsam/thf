@@ -11,7 +11,7 @@ data Formula = OrFormula Formula Formula
              | Subtype String String
              | Mapping Formula Formula
              | Union Formula Formula
-             | XProp Formula Formula
+             | XProd Formula Formula
              | Operator OperatorType
              | Constant String
              | Variable Var
@@ -20,14 +20,14 @@ data Formula = OrFormula Formula Formula
              | Functor String [Formula]
              deriving (Show)
 
-data OperatorType = IFF | Implies | ImpliedBy | XOR | NOR | NAND | NOT | EQ | NEQ | PI | EX | OR | AND
+data OperatorType = IFF | Implies | ImpliedBy | XOR | NOR | NAND | NOT | EQQ | NEQQ | PI | EX | OR | AND
                   deriving (Show)
 
 data Quantifier = Q_Exclam
                 | Q_Question
                 | Q_Carrot
-                | Q_Mystery1
-                | Q_Mystery2
+                | Q_Pi
+                | Q_Sigma
                 | Q_Mystery3
                 | Q_Mystery4
                 deriving (Show)
