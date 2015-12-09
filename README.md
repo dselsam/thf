@@ -12,3 +12,7 @@ http://www.loria.fr/~jablanch/stuff/isa_filter_v2.tgz
 3. `python translate_to_lean.py`
 4. `cd sledgehammer_lean`
 5. `<path_to_lean_repo>/bin/linja`
+
+### Notes/Acknowledgements
+
+I drew _heavily_ from an existing Haskell implementation of a parser for a subset of TPTP, but unfortunately I can no longer find the original repository. I will keep looking, but if anybody reading this knows anything about the Haskell TPTP parser in question please let me know.
