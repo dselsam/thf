@@ -1,11 +1,12 @@
 import os
 import subprocess
 
-src_prefix = "/home/dselsam/github/thf/isa_filter_v2/problems/"
-dst_prefix = "/home/dselsam/github/thf/sledgehammer_lean/"
+THF_PATH = "/home/dselsam/github/thf/"
 
-path = "/home/dselsam/github/thf/isa_filter_v2/problems/"
-f = "/home/dselsam/github/thf/dist/build/thf/thf"
+src_prefix = THF_PATH + "isa_filter_v2/problems/"
+dst_prefix = THF_PATH + "sledgehammer_lean/"
+
+f = THF_PATH + "dist/build/thf/thf"
 
 subprocess.call(["rm","-rf",dst_prefix])
 subprocess.call(["mkdir",dst_prefix])
