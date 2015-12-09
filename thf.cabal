@@ -20,7 +20,7 @@ executable thf
   other-modules:       Parser,Lexer
 
   -- other-extensions:
-  build-depends:       base >=4.4 && <4.10, array, mtl, containers, directory
+  build-depends:       base >=4.4 && <4.10, array, mtl, containers, directory, split
 
   hs-source-dirs:      src
 

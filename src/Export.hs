@@ -2,20 +2,22 @@ module Export where
 
 import qualified Statement as Statement
 import Formula
+import Data.List.Split
 --import Formula (Formula)
 
 export_statements :: [Statement.Statement] -> [String]
-export_statements statements = "import sledgehammer_prelude" : (map export_statement statements)
+export_statements statements = map export_statement statements
 
 purify_filename :: String -> String
 purify_filename filename = let repl '/' = '.'
                                repl c = c in
-                           map repl filename
+                           case splitOn "." (map repl filename) of
+                             [first,second,third] -> first ++ "." ++ second
 
 export_statement :: Statement.Statement -> String
 export_statement s = case s of
-  Statement.Comment -> ""
-  Statement.Include filename _ -> "include " ++ purify_filename filename
+  Statement.Comment c -> "/- \n" ++ c ++ "\n-/\n"
+  Statement.Include filename _ -> "import " ++ purify_filename filename
   Statement.AnnotatedFormula name (Statement.Role role) formula
     | role == "lemma" || role == "theorem" -> "axiom " ++ " " ++ name ++ " : " ++ export_formula formula
     | role == "conjecture" -> "theorem " ++ name ++ " : " ++ export_formula formula ++ " := sorry" -- "by blast"

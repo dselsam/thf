@@ -89,7 +89,7 @@ TPTP_file  : {[]} | TPTP_input TPTP_file  {$1 : $2}
 TPTP_input  :: {Statement}
 TPTP_input  : annotated_formula  {$1}
              | include  { $1 }
-             | comment { Statement.Comment }
+             | comment { Statement.Comment $1 }
 
 annotated_formula  :: {Statement}
 annotated_formula  :  thf_annotated {$1}
